@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Will You Be Mine? ❤️</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Ambient background layers -->
+<div class="aurora-bg" aria-hidden="true">
+  <div class="aurora-blob a1"></div>
+  <div class="aurora-blob a2"></div>
+  <div class="aurora-blob a3"></div>
+</div>
+<canvas id="starfield" aria-hidden="true"></canvas>
+<canvas id="particles" aria-hidden="true"></canvas>
+<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+<div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+
+<!-- Sound toggle -->
+<button id="soundToggle" class="sound-toggle" aria-label="Toggle background music">
+  <span class="sound-icon">♪</span>
+</button>
+
+<!-- ============ PRELOADER ============ -->
+<section id="preloader" class="screen active">
+  <div class="preloader-inner">
+    <p class="loader-line" id="loaderLine1">Someone hacked your phone<span class="dots"><span>.</span><span>.</span><span>.</span></span></p>
+    <div class="loader-bar"><div class="loader-fill" id="loaderFill"></div></div>
+  </div>
+</section>
+
+<!-- ============ REVEAL ============ -->
+<section id="reveal" class="screen">
+  <div class="glass-card center-card">
+    <p class="eyebrow">plot twist</p>
+    <h1 class="headline">Oops&hellip;<br>It wasn't a hacker.</h1>
+    <p class="subline">It was someone who stole your heart <span class="heart-emoji">❤️</span></p>
+    <button class="btn btn-primary next-btn" data-next="level1">Continue</button>
+  </div>
+</section>
+
+<!-- ============ LEVEL 1 ============ -->
+<section id="level1" class="screen">
+  <div class="glass-card center-card">
+    <p class="eyebrow">Level 1 · Warm-up</p>
+    <h2 class="headline small">Before we continue&hellip;<br>Are you cute?</h2>
+    <div class="choice-grid" id="level1Choices">
+      <button class="btn btn-choice" data-answer="correct">😁 Yes</button>
+      <button class="btn btn-choice" data-answer="correct">🥰 Definitely</button>
+      <button class="btn btn-choice" data-answer="correct">🤭 Obviously</button>
+    </div>
+    <p class="feedback" id="level1Feedback"></p>
+    <button class="btn btn-primary next-btn hidden" data-next="level2" id="level1Next">Continue</button>
+  </div>
+</section>
+
+<!-- ============ LEVEL 2 ============ -->
+<section id="level2" class="screen">
+  <div class="glass-card center-card">
+    <p class="eyebrow">Level 2 · A little quiz</p>
+    <h2 class="headline small">Do you know who smiles every time your message appears?</h2>
+    <div class="choice-grid" id="level2Choices">
+      <button class="btn btn-choice" data-answer="wrong">🤔 Google</button>
+      <button class="btn btn-choice" data-answer="wrong">🤖 ChatGPT</button>
+      <button class="btn btn-choice" data-answer="right">❤️ Me</button>
+    </div>
+    <p class="feedback" id="level2Feedback"></p>
+    <button class="btn btn-primary next-btn hidden" data-next="level3" id="level2Next">Continue</button>
+  </div>
+</section>
+
+<!-- ============ LEVEL 3 : MINI LOVE QUIZ ============ -->
+<section id="level3" class="screen">
+  <div class="glass-card center-card">
+    <p class="eyebrow">Level 3 · Mini love quiz</p>
+    <div id="quizWrap">
+      <h2 class="headline small" id="quizQuestion">Favorite food?</h2>
+      <div class="choice-grid" id="quizChoices"></div>
+    </div>
+    <p class="feedback" id="level3Feedback"></p>
+    <button class="btn btn-primary next-btn hidden" data-next="loveMeter" id="level3Next">Continue</button>
+  </div>
+</section>
+
+<!-- ============ LOVE METER ============ -->
+<section id="loveMeter" class="screen">
+  <div class="glass-card center-card">
+    <p class="eyebrow">Diagnostics</p>
+    <h2 class="headline small">Calculating love level&hellip;</h2>
+    <div class="meter-wrap">
+      <div class="meter-ring">
+        <svg viewBox="0 0 200 200" class="meter-svg">
+          <circle cx="100" cy="100" r="88" class="meter-track"></circle>
+          <circle cx="100" cy="100" r="88" class="meter-progress" id="meterProgress"></circle>
+        </svg>
+        <div class="meter-label" id="meterLabel">0%</div>
+      </div>
+    </div>
+    <p class="meter-status" id="meterStatus">Calculating&hellip;</p>
+    <button class="btn btn-primary next-btn hidden" data-next="catchGame" id="meterNext">Continue</button>
+  </div>
+</section>
+
+<!-- ============ CATCH MY HEART GAME ============ -->
+<section id="catchGame" class="screen">
+  <div class="glass-card center-card wide-card">
+    <p class="eyebrow">A little game</p>
+    <h2 class="headline small">Catch My Heart <span class="heart-emoji">❤️</span></h2>
+    <p class="hint-text" id="catchHint">Tap it before it runs away&hellip;</p>
+    <div class="game-field" id="catchField">
+      <button class="floating-heart-btn" id="catchHeart">❤️</button>
+    </div>
+    <p class="feedback" id="catchFeedback"></p>
+    <button class="btn btn-primary next-btn hidden" data-next="runningBtn" id="catchNext">Continue</button>
+  </div>
+</section>
+
+<!-- ============ RUNNING BUTTON ============ -->
+<section id="runningBtn" class="screen">
+  <div class="glass-card center-card wide-card">
+    <p class="eyebrow">The big question</p>
+    <h2 class="headline small">Will you go on a date with me?</h2>
+    <div class="run-field" id="runField">
+      <button class="btn btn-primary" id="yesRunBtn">YES ❤️</button>
+      <button class="btn btn-choice runaway-btn" id="notYetBtn">NOT YET 😅</button>
+    </div>
+    <button class="btn btn-primary next-btn hidden" data-next="luckWheel" id="runNext">Continue</button>
+  </div>
+</section>
+
+<!-- ============ LUCK WHEEL ============ -->
+<section id="luckWheel" class="screen">
+  <div class="glass-card center-card wide-card">
+    <p class="eyebrow">Spin the wheel</p>
+    <h2 class="headline small">Spin the Love Wheel</h2>
+    <div class="wheel-wrap">
+      <div class="wheel-pointer">▼</div>
+      <div class="wheel" id="wheel">
+        <svg viewBox="0 0 400 400" id="wheelSvg"></svg>
+      </div>
+    </div>
+    <button class="btn btn-primary" id="spinBtn">Spin</button>
+    <p class="feedback" id="wheelFeedback"></p>
+    <button class="btn btn-primary next-btn hidden" data-next="memories" id="wheelNext">Continue</button>
+  </div>
+</section>
+
+<!-- ============ MEMORY CARDS ============ -->
+<section id="memories" class="screen memories-screen">
+  <div class="memories-inner">
+    <p class="eyebrow center-text">Every reason, in order of appearance</p>
+    <h2 class="headline small center-text">Little things I keep</h2>
+    <div class="memory-grid">
+      <div class="memory-card"><span class="memory-icon">❤️</span><p>Every smile</p></div>
+      <div class="memory-card"><span class="memory-icon">🌸</span><p>Every conversation</p></div>
+      <div class="memory-card"><span class="memory-icon">🌙</span><p>Every late night</p></div>
+      <div class="memory-card"><span class="memory-icon">✨</span><p>Every laugh</p></div>
+      <div class="memory-card"><span class="memory-icon">💌</span><p>Every moment</p></div>
+    </div>
+    <div class="secret-heart-wrap">
+      <p class="hint-text faint">psst&hellip; something is hidden nearby</p>
+      <button class="secret-heart" id="secretHeart" aria-label="Secret">❤</button>
+    </div>
+    <button class="btn btn-primary next-btn" id="memoriesNext" data-next="finalProposal">I'm ready</button>
+  </div>
+</section>
+
+<!-- ============ FINAL PROPOSAL ============ -->
+<section id="finalProposal" class="screen final-screen">
+  <div class="final-inner">
+    <p class="typewriter-line" id="tw1"></p>
+    <p class="typewriter-line" id="tw2"></p>
+    <p class="typewriter-line" id="tw3"></p>
+    <p class="typewriter-line so-line" id="tw4"></p>
+
+    <div class="glass-card final-card hidden" id="finalCard">
+      <h1 class="headline final-headline">Will You Be My Girlfriend?</h1>
+      <div class="choice-grid final-choices">
+        <button class="btn btn-primary" id="finalYes1">YES ❤️</button>
+        <button class="btn btn-primary" id="finalYes2">YES DEFINITELY ❤️</button>
+      </div>
+    </div>
+
+    <div class="celebration hidden" id="celebration">
+      <h1 class="headline final-headline">You just made someone the happiest person alive <span class="heart-emoji">❤️</span></h1>
+      <p class="promise-text">I promise to respect you, support you, make you laugh, stand beside you, and create beautiful memories together.</p>
+      <p class="ending-text">The best stories begin with a simple YES <span class="heart-emoji">❤️</span></p>
+      <div class="moon" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Secret discovery overlay -->
+<div class="secret-overlay hidden" id="secretOverlay">
+  <p>You discovered my hidden feelings <span class="heart-emoji">❤️</span></p>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
